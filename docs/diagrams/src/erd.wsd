@@ -1,0 +1,81 @@
+@startuml
+entity "Course" as c  {
+    id: number
+    description: varchar(100)
+
+}
+
+entity "CourseCycle" as cc {
+    id: number
+    courseId: number
+    startDate: Date
+    endDate: Date
+}
+
+c }|--o{ cc
+
+entity "Student" as s {
+    id: number
+    name: varchar
+
+}
+
+entity "Enrollment" as e {
+    courseCycleId: number
+    studentId: number
+    enrollmentDate: Date
+    status: varchar
+}
+
+s ||--o{ e
+cc ||--o{e
+
+entity "Instructor" as i {
+
+
+}
+
+entity "section" as sec {
+    id: number
+    courseCycleId: number
+    name: varchar
+
+}
+
+cc }|--o{sec
+
+entity "lesson" as le {
+    id: number
+    sectionId: number
+    position: number
+    contentType: varchar
+    content: varchar
+}
+
+sec ||--o{le
+
+entity "Appointment" as app {
+    id: number
+    courseCycleId: number
+    appointmentDate: Date
+
+}
+
+entity "AppointmentSection" as apsec {
+    appointmentId: number
+    sectionId: number
+}
+
+app }|--|| cc
+app ||--|{apsec
+apsec ||--|{sec
+
+entity "EnrollmentActivity" as ea {
+    id: number
+    lesson_id: number
+    progress: number
+    actityTime: DateTime
+}
+e||--o{ea
+ea}o--||le
+@enduml
